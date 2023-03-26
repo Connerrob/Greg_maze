@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Greg's Gambits | Greg's Maze</title>
+<link href="greg.css" rel="stylesheet" type="text/css" />
+
+<script type = "text/javascript">
+
+
+	var cells;
+	function setup()
+	{
+	cells = new Array([document.getElementById("cell00"),document.getElementById("cell01"),document.getElementById("cell02"), document.getElementById("cell03")],
+	[document.getElementById("cell10"), document.getElementById("cell11"), document.getElementById("cell12"), document.getElementById("cell13")], 
+	[document.getElementById("cell20"), document.getElementById("cell21"),document.getElementById("cell22"), document.getElementById("cell23")], 
+	[document.getElementById("cell30"), document.getElementById("cell31"), document.getElementById("cell32"), document.getElementById("cell33")]);
+	placeNumbers(); 
+	generatePitFalls();
+	}
+	
+	function placeNumbers() 
+	{
+			// row 1
+			cells[0][0].innerHTML = "<img src = 'images/bunny.jpg'>";
+			cells[0][1].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[0][2].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[0][3].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			// row 2
+			cells[1][0].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[1][1].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[1][2].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[1][3].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			// row 3
+			cells[2][0].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[2][1].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[2][2].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[2][3].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			// row 4
+			cells[3][0].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[3][1].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[3][2].innerHTML = "<img src = 'images/bluebox.jpg'>";
+			cells[3][3].innerHTML = "<img src = 'images/bunny_land_greg.jpg'>";
+			
+		
+
+	}
+	var pitFall1, pitFall2, pitFall3, pitFall4;
+	
+	function generatePitFalls() {
+		pitFall1 = Math.floor((Math.random() * 5) + 2);
+		
+		pitFall2 = Math.floor((Math.random() * 5) + 1);
+		
+		pitFall3 = Math.floor((Math.random() * 4) + 0); 
+		
+		pitFall4 = Math.floor((Math.random() * 4) + 0); 
+
+		while ((pitFall1 == 3) || (pitFall2 == 3) || (pitFall3 == 3) || (pitFall4 == 3)) {
+			 pitFall1 = Math.floor((Math.random() * 4) + 1);
+			 pitFall2 = Math.floor((Math.random() * 4) + 1);
+			 pitFall3 = Math.floor((Math.random() * 4) + 0);
+			 pitFall4 = Math.floor((Math.random() * 4) + 0);
+}
+}
+		function doClick(row, col) {
+  let bunnyCellRow, bunnyCellCol;
+
+  for (let i = 0; i < cells.length; i++) {
+    for (let j = 0; j < cells[i].length; j++) {
+      if (cells[i][j].innerHTML.includes("bunny.jpg")) {
+        bunnyCellRow = i;
+        bunnyCellCol = j;
+        break;
+      }
+    }
+  }
+
+  if ((row == bunnyCellRow && Math.abs(col - bunnyCellCol) == 1) || 
+      (col == bunnyCellCol && Math.abs(row - bunnyCellRow) == 1) ||
+      (Math.abs(row - bunnyCellRow) == 1 && Math.abs(col - bunnyCellCol) == 1)) {
+      
+    if ((row == 0 && col == pitFall1) || (row == 1 && col == pitFall2) || (row == 2 && col == pitFall3) || (row == 3 && col == pitFall4)) {
+      alert("Cannot go this way!");
+      return;
+    }
+	if (row == 3 && col == 3) {
+      alert("Congratulations! You won!");
+      if (window.prompt("Play again?", "yes")) {
+        setup();
+      }
+      return;
+    }
+	
+    let temp = cells[row][col].innerHTML;
+    cells[row][col].innerHTML = cells[bunnyCellRow][bunnyCellCol].innerHTML;
+    cells[bunnyCellRow][bunnyCellCol].innerHTML = temp;
+  }
+  else {
+	alert ("Illegal move");
+  }
+}
+	
+</script>
+</head>
+
+<body onload = "setup()">
+
+<div id="container">
+
+<img src="images/superhero.jpg" class="floatleft" />
+<h1 id="logo"><em>Greg's Maze</em></h1>
+<p>&nbsp;</p>
+
+<div id="nav">
+  <p><a href="index.html">Home</a>
+  <a href="greg.html">About Greg</a>
+  <a href="play_games.html">Play a Game</a>
+  <a href="gregs_tales.html"> Greg's Tales</a>
+  <a href="signin.html">Sign In</a>
+  <a href="contact.html">Contact Us</a>
+  <a href="greg_aboutyou.html">Tell Greg About You</a></p>
+</div>
+
+<div id="content">
+<p> Traverse the maze of blue blocks, as a Bunny to get home! You can do this by landing in the cell where green grass is located. Click on the blue block where you want to move the bunny. You can only move one cell at a time, you can move diagonal, left, right, up, or down. When you encounter a roadblock choose a different blue cell and make your way around. 
+
+
+<table width = "60%" align = "center">
+<tr><td height = "60"><span onclick = "doClick(0,0)" id ="cell00" />&nbsp;</td>
+<td><span onclick = "doClick(0,1)" id = "cell01" />&nbsp;</td>
+<td><span onclick = "doClick(0,2)" id = "cell02" />&nbsp;</td>
+<td><span onclick = "doClick(0,3)" id = "cell03" />&nbsp;</td>
+</tr> 
+<tr>
+<td height = "60"><span onclick = "doClick(1,0)" id = "cell10" />&nbsp;</td>
+<td><span onclick = "doClick(1,1)" id = "cell11" />&nbsp;</td>
+<td><span onclick = "doClick(1,2)" id = "cell12" />&nbsp;</td>
+<td><span onclick = "doClick(1,3)" id = "cell13" />&nbsp;</td>
+</tr> 
+<tr>
+<td height = "60"><span onclick = "doClick(2,0)" id = "cell20" />&nbsp;</td>
+<td><span onclick = "doClick(2,1)" id = "cell21" />&nbsp;</td>
+<td><span onclick = "doClick(2,2)" id = "cell22" />&nbsp;</td>
+<td><span onclick = "doClick(2,3)" id = "cell23" />&nbsp;</td>
+</tr> 
+<tr>
+<td height = "60"><span onclick = "doClick(3,0)" id = "cell30" />&nbsp;</td>
+<td><span onclick = "doClick(3,1)" id = "cell31" />&nbsp;</td>
+<td><span onclick = "doClick(3,2)" id = "cell32" />&nbsp;</td>
+<td><span onclick = "doClick(3,3)" id = "cell33" />&nbsp;</td>
+</tr>
+
+</table>
+
+
+</div>
+	<div id="footer">Copyright &copy; 2013 Greg's Gambits<br />
+	<a href="mailto:connerrob2000@gmail.com">connerrob2000@gmail.com</a></div>
+</div>
+</body></html>
